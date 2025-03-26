@@ -25,7 +25,7 @@ function Invoke-IntuneBackupAppProtectionPolicy {
 
     #Connect to MS-Graph if required
     if ($null -eq (Get-MgContext)) {
-        connect-mggraph -scopes "DeviceManagementApps.ReadWrite.All, DeviceManagementConfiguration.ReadWrite.All, DeviceManagementServiceConfig.ReadWrite.All, DeviceManagementManagedDevices.ReadWrite.All" 
+        connect-mggraph -scopes "DeviceManagementApps.Read.All, DeviceManagementConfiguration.Read.All, DeviceManagementServiceConfig.Read.All, DeviceManagementManagedDevices.Read.All" 
     }
 
     # Get all App Protection Policies
