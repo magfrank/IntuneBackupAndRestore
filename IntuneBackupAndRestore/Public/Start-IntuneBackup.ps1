@@ -37,6 +37,7 @@ function Start-IntuneBackup() {
     }else{
         Write-Host "MS-Graph already connected, checking scopes"
         $scopes = Get-MgContext | Select-Object -ExpandProperty Scopes
+	Write-Host "Current scopes: $scopes
         $IncorrectScopes = $false
         if ($scopes -notcontains "DeviceManagementApps.Read.All") {$IncorrectScopes = $true}
         if ($scopes -notcontains "DeviceManagementConfiguration.Read.All") {$IncorrectScopes = $true}
