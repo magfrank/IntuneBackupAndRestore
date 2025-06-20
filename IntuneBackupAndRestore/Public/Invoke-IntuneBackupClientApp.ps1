@@ -43,6 +43,7 @@ function Invoke-IntuneBackupClientApp {
 			$clientAppType = $clientApp.'@odata.type'.split('.')[-1]
 		
 			$fileName = ($clientApp.displayName).Split([IO.Path]::GetInvalidFileNameChars()) -join '_'
+			$fileName = $fileName -replace '[:\\/<>|"?*]', '_'
 			$clientAppDetails =  Invoke-MgRestMethod -Uri "$apiversion/deviceAppManagement/mobileApps/$($clientApp.id)"
 			$clientAppDetails | ConvertTo-Json -depth 3 | Out-File -LiteralPath "$path\Client Apps\$($clientAppType)_$($fileName).json" 
 		

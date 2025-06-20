@@ -43,6 +43,7 @@ function Invoke-IntuneBackupDeviceManagementScriptAssignment {
 	
 			if ($assignments) {
 				$fileName = ($deviceManagementScript.displayName).Split([IO.Path]::GetInvalidFileNameChars()) -join '_'
+			$fileName = $fileName -replace '[:\\/<>|"?*]', '_'
 				$assignments | ConvertTo-Json | Out-File -LiteralPath "$path\Device Management Scripts\Assignments\$fileName.json"
 	
 				[PSCustomObject]@{

@@ -40,6 +40,7 @@ function Invoke-IntuneBackupDeviceCompliancePolicy {
 		
 		foreach ($deviceCompliancePolicy in $deviceCompliancePolicies) {
 			$fileName = ($deviceCompliancePolicy.displayName).Split([IO.Path]::GetInvalidFileNameChars()) -join '_'
+			$fileName = $fileName -replace '[:\\/<>|"?*]', '_'
 			$deviceCompliancePolicy | ConvertTo-Json -Depth 100 | Out-File -LiteralPath "$path\Device Compliance Policies\$fileName.json"
 	
 			[PSCustomObject]@{

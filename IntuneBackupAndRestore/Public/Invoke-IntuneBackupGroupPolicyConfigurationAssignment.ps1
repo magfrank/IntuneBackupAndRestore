@@ -43,6 +43,7 @@ function Invoke-IntuneBackupGroupPolicyConfigurationAssignment {
 			
 			if ($assignments) {
 				$fileName = ($groupPolicyConfiguration.displayName).Split([IO.Path]::GetInvalidFileNameChars()) -join '_'
+			$fileName = $fileName -replace '[:\\/<>|"?*]', '_'
 				$assignments | ConvertTo-Json | Out-File -LiteralPath "$path\Administrative Templates\Assignments\$fileName.json"
 	
 				[PSCustomObject]@{

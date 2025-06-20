@@ -51,6 +51,8 @@ function Invoke-IntuneBackupAppProtectionPolicy {
 			}
 	
 			$fileName = ($appProtectionPolicy.displayName).Split([IO.Path]::GetInvalidFileNameChars()) -join '_'
+			$fileName = $fileName -replace '[:\\/<>|"?*]', '_'
+
 			$appProtectionPolicy | ConvertTo-Json -Depth 100 | Out-File -LiteralPath "$path\App Protection Policies\$fileName.json"
 	
 			[PSCustomObject]@{

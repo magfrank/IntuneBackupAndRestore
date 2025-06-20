@@ -40,6 +40,7 @@
 	
 		foreach ($winAutopilotDeploymentProfile in $winAutopilotDeploymentProfiles) {
 			$fileName = ($winAutopilotDeploymentProfile.displayName).Split([IO.Path]::GetInvalidFileNameChars()) -join '_'
+			$fileName = $fileName -replace '[:\\/<>|"?*]', '_'
 	
 			# Export the Deployment profile
 			$winAutopilotDeploymentProfileObject = Invoke-MgGraphRequest -Uri "https://graph.microsoft.com/$ApiVersion/deviceManagement/windowsAutopilotDeploymentProfiles/$($winAutopilotDeploymentProfile.id)"

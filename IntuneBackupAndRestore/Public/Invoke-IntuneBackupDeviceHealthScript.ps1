@@ -39,6 +39,7 @@
 	
 		foreach ($healthScript in $healthScripts) {
 			$fileName = ($healthScript.displayName).Split([IO.Path]::GetInvalidFileNameChars()) -join '_'
+			$fileName = $fileName -replace '[:\\/<>|"?*]', '_'
 	
 			# Export the Health script profile (excluding Microsoft builtin scripts)
 			if (-not ($healthScript.publisher -eq "Microsoft")) {
@@ -49,7 +50,7 @@
 				if (-not (Test-Path "$Path\Device Health Scripts\Script Content")) {
 					$null = New-Item -Path "$Path\Device Health Scripts\Script Content" -ItemType Directory
 				}
-	
+				
 				$healthScriptObject = Invoke-MgGraphRequest -Uri "$ApiVersion/deviceManagement/deviceHealthScripts/$($healthScript.id)"
 				$healthScriptDetectionContent = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($healthScriptObject.detectionScriptContent))
 				$healthScriptDetectionContent | Out-File -LiteralPath "$path\Device Health Scripts\Script Content\$fileName`_detection.ps1"

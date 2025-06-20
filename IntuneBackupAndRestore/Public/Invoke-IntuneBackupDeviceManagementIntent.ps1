@@ -43,6 +43,7 @@ function Invoke-IntuneBackupDeviceManagementIntent {
 			Write-Verbose "Requesting Template"
 			$template = Get-MgBetaDeviceManagementTemplate -DeviceManagementTemplateId $($intent.templateId) 
 			$templateDisplayName = ($template.displayName).Split([IO.Path]::GetInvalidFileNameChars()) -join '_'
+			$fileName = $fileName -replace '[:\\/<>|"?*]', '_'
 	
 			if (-not (Test-Path "$Path\Device Management Intents\$templateDisplayName")) {
 				$null = New-Item -Path "$Path\Device Management Intents\$templateDisplayName" -ItemType Directory
@@ -75,6 +76,7 @@ function Invoke-IntuneBackupDeviceManagementIntent {
 			}
 			
 			$fileName = ("$($template.id)_$($intent.displayName)").Split([IO.Path]::GetInvalidFileNameChars()) -join '_'
+			$fileName = $fileName -replace '[:\\/<>|"?*]', '_'
 			$intentBackupValue | ConvertTo-Json -depth 10 | Out-File -LiteralPath "$path\Device Management Intents\$templateDisplayName\$fileName.json"
 	
 			[PSCustomObject]@{

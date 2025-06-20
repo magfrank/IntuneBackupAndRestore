@@ -49,6 +49,7 @@ function Invoke-IntuneBackupConfigurationPolicy {
 			}
 			
 			$fileName = ($configurationPolicy.name).Split([IO.Path]::GetInvalidFileNameChars()) -join '_'
+			$fileName = $fileName -replace '[:\\/<>|"?*]', '_'
 			$configurationPolicy | ConvertTo-Json -Depth 100 | Out-File -LiteralPath "$path\Settings Catalog\$fileName.json"
 	
 			[PSCustomObject]@{

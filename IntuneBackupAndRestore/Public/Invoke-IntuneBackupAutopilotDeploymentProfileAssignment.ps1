@@ -38,6 +38,7 @@ function Invoke-IntuneBackupAutopilotDeploymentProfileAssignment {
 			
 			if ($assignments) {
 				$fileName = ($winAutopilotDeploymentProfile.displayName).Split([IO.Path]::GetInvalidFileNameChars()) -join '_'
+			$fileName = $fileName -replace '[:\\/<>|"?*]', '_'
 				$assignments | ConvertTo-Json | Out-File -LiteralPath "$path\Autopilot Deployment Profiles\Assignments\$fileName.json"
 	
 				[PSCustomObject]@{

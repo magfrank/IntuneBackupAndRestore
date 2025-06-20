@@ -66,6 +66,7 @@ function Invoke-IntuneBackupAppProtectionPolicyAssignment {
 			$assignments = Invoke-MgGraphRequest -Uri "deviceAppManagement/$dataType('$($appProtectionPolicy.id)')/assignments"
 	
 			$fileName = ($appProtectionPolicy.displayName).Split([IO.Path]::GetInvalidFileNameChars()) -join '_'
+			$fileName = $fileName -replace '[:\\/<>|"?*]', '_'
 			$assignments | ConvertTo-Json -Depth 100 | Out-File -LiteralPath "$path\App Protection Policies\Assignments\$($appProtectionPolicy.id) - $fileName.json"
 	
 			[PSCustomObject]@{
